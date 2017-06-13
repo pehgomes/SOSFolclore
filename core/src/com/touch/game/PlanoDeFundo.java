@@ -11,21 +11,21 @@ import static com.touch.game.Constantes.*;
  */
 
 public class PlanoDeFundo {
-    private Texture texture;
+    private Texture frames;
 
     private float positionx;
     private float positiony;
 
     public PlanoDeFundo () {
-        texture = new Texture("fundo/fundop1.png");
+        frames = new Texture("fundo/fundop1.png");
 
         positionx = 0;
         positiony = SCREENX;
     }
 
     public void draw(SpriteBatch batch) {
-        batch.draw(texture, positionx, 0, SCREENX, SCREENY);
-        batch.draw(texture, positiony, 0, SCREENX, SCREENY);
+        batch.draw(frames, positionx, 0, SCREENX, SCREENY);
+        batch.draw(frames, positiony, 0, SCREENX, SCREENY);
     }
 
     public void update(float time) {
@@ -42,12 +42,10 @@ public class PlanoDeFundo {
             positionx = 0;
         }
 
-
-
     }
 
 
     public void dispose() {
-        texture.dispose();
+        frames.dispose();
     }
 }

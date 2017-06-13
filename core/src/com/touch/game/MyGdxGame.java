@@ -3,12 +3,11 @@ package com.touch.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.touch.game.com.touch.game.interfaces.Ser;
+import com.touch.game.com.touch.game.personagens.Victoria;
+
 
 import static com.touch.game.Constantes.*;
 
@@ -20,18 +19,22 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private SpriteBatch batch;
 
-	private Personagem diego;
+	private Ser personagemAEscolher;
+
+	String personagemEscolhido;
 
 	@Override
 	public void create () {
 		fundo = new PlanoDeFundo();
 		batch = new SpriteBatch();
-		diego = new Personagem(persIni, (int) (SCREENY/2.25));
+
+		personagemAEscolher = new Victoria(persIni, (int) (SCREENY/2.25), 3);
 
 	}
 
 	@Override
 	public void render () {
+		input();
 		update(Gdx.graphics.getDeltaTime());
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
@@ -42,17 +45,19 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	private void draw(SpriteBatch batch) {
-
 		fundo.draw(batch);
-
-		diego.draw(batch);
-
+		personagemAEscolher.draw(batch);
 	}
 
 	private void update(float time) {
 		fundo.update(time);
+		personagemAEscolher.update(time);
+	}
 
-		diego.update(time);
+	private void input() {
+		if(Gdx.input.justTouched()) {
+			personagemAEscolher.impulso();
+		}
 	}
 	
 	@Override
@@ -60,6 +65,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		fundo.dispose();
 	}
 
-
+	private boolean isDiego(){
+		boolean isDiego = false;
+		if (personagemEscolhido != null) {
+			isDiego = true;
+		}
+		return isDiego;
+	}
 
 }

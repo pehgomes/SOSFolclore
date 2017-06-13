@@ -14,4 +14,8 @@ public class Constantes {
     public static float canovelx_= -0.1f*SCREENX;
     public static int personagem = (int) (0.05f*SCREENY);
     public static int persIni = (int) 1.1f*SCREENY;
+
+    public static float decVeloy = SCREENY/1.5f;
+
+    public static float impulso = SCREENY/5;
 }
