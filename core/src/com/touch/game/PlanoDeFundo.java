@@ -28,20 +28,22 @@ public class PlanoDeFundo {
         batch.draw(frames, positiony, 0, SCREENX, SCREENY);
     }
 
-    public void update(float time) {
-        positionx += time * canovelx_;
-        positiony += time * canovelx_;
+    public void update(float time, boolean andando) {
+        if (andando) {
+            positionx += time * canovelx_;
+            positiony += time * canovelx_;
 
-        if (positionx + SCREENX <= 0) {
-            positionx = SCREENX;
-            positiony = 0;
+            if (positionx + SCREENX <= 0) {
+                positionx = SCREENX;
+                positiony = 0;
+            }
+
+            if (positiony + SCREENX <= 0) {
+                positiony = SCREENX;
+                positionx = 0;
+            }
+
         }
-
-        if (positiony + SCREENX <= 0) {
-            positiony = SCREENX;
-            positionx = 0;
-        }
-
     }
 
 
