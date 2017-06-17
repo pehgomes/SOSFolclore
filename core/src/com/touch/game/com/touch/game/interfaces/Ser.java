@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public interface Ser {
 
-    void update(float tempo);
+    void update(int quantidadeDeTexturas,float tempo, boolean movimentando, boolean atacando, boolean pulando);
 
     void impulso();
 

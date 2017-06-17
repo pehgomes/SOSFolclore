@@ -4,10 +4,6 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.touch.game.MyGdxGame;
 
 
 
@@ -22,5 +18,4 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useCompass = false;
 		initialize(new MyGdxGame(), config);
 	}
-
 }
