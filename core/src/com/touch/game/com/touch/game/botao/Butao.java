@@ -18,6 +18,7 @@ public class Butao {
 
     private Texture textura;
 
+
     public Butao(Texture textura, int posx, int posy, int tamanho) {
         this.textura = textura;
         but = new Rectangle(posx, posy, tamanho, tamanho);
@@ -26,7 +27,7 @@ public class Butao {
     public void draw(SpriteBatch batch) {
         batch.draw(textura, but.x - (but.getWidth() * (highf - 1)) / 2,
                 but.y - (but.getHeight() * (highf - 1))/2,
-                but.getWidth()* highf, but.getHeight()*highf);
+                but.getWidth() * (high ? highf * 1.1f : highf) , but.getHeight() * (high ? highf * 1.1f : highf));
     }
 
     public boolean isClicado(int x, int y) {

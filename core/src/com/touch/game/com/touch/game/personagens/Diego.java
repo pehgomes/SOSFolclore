@@ -7,8 +7,8 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class Diego extends Personagem {
 
 
-    public Diego(int posx, int posy, int quantidadeDeTexturas) {
-        super(posx, posy, quantidadeDeTexturas);
+    public Diego(Texture personaParado ,int posx, int posy, int quantidadeDeTexturas) {
+        super(personaParado ,posx, posy, quantidadeDeTexturas);
     }
 
     @Override

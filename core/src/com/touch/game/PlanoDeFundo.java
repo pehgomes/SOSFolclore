@@ -17,7 +17,7 @@ public class PlanoDeFundo {
     private float positiony;
 
     public PlanoDeFundo () {
-        frames = new Texture("fundo/fundop1.png");
+        frames = new Texture("fundo/fundop3.png");
 
         positionx = 0;
         positiony = SCREENX;

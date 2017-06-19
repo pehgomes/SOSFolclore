@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.touch.game.com.touch.game.botao.Butao;
 import com.touch.game.com.touch.game.interfaces.Ser;
+import com.touch.game.com.touch.game.objetos.Municao;
+import com.touch.game.com.touch.game.personagens.Bot;
 import com.touch.game.com.touch.game.personagens.Diego;
 import com.touch.game.com.touch.game.personagens.Victoria;
 
@@ -24,11 +26,15 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private Butao btnPular;
 
+	private Municao pedrinha;
+
 	private PlanoDeFundo fundo;
 
 	private SpriteBatch batch;
 
 	private Ser personagemAEscolher;
+
+    private Ser bot1;
 
 	private boolean andando ;
 
@@ -43,12 +49,14 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 		this.quantidadeDeTextura = 3;
+		batch = new SpriteBatch();
 		btnStart = new Butao(new Texture("botoes/andar.png"), btnAndarx, btnAndary, btnTamanho);
 		btnAtack = new Butao(new Texture("botoes/atirarE.png"), btnAtackx, btnAtacky, btnTamanho);
 		btnPular = new Butao(new Texture("botoes/pular.png"), btnPularx, btnPulary, btnTamanho );
-		fundo = new PlanoDeFundo();
-		batch = new SpriteBatch();
-		personagemAEscolher = new Diego(persIni, (int) (SCREENY/2.25), quantidadeDeTextura);
+        fundo = new PlanoDeFundo();
+        personagemAEscolher = new Diego(new Texture("personas/diego/andar/walk1.png") ,(int) 0.99f * SCREENY, (int) (SCREENY/2.45 ), quantidadeDeTextura);
+        bot1 = new Bot(new Texture("personas/bot/bot1.png") ,(int) 0.99f * SCREENY, (int) (SCREENY/2.45 ), 3);
+        pedrinha = new Municao((int) personagemAEscolher.getCorpoPersonagem().x ,(int) personagemAEscolher.getCorpoPersonagem().y);
 
 	}
 
@@ -72,42 +80,55 @@ public class MyGdxGame extends ApplicationAdapter {
 		fundo.draw(batch);
 		personagemAEscolher.draw(batch);
 
+        pedrinha.draw(batch);
+
+        bot1.draw(batch);
+
 		btnStart.draw(batch);
 		btnAtack.draw(batch);
 		btnPular.draw(batch);
 	}
 
 	private void update(float time) {
-		fundo.update(time, isAndando());
-		personagemAEscolher.update(quantidadeDeTextura ,time, isAndando(), isAtacando(), isPulando());
+		fundo.update(time, isPersonaAndando());
+		personagemAEscolher.update(quantidadeDeTextura , time, isPersonaAndando(), isPersonaAtacando(), isPersonaPulando());
+        bot1.update(quantidadeDeTextura , time, isPersonaAndando(), isPersonaAtacando(), isPersonaPulando());
+        pedrinha.update(time ,isPersonaAndando());
 	}
 
 	@Override
 	public void dispose () {
 		fundo.dispose();
+		personagemAEscolher.dispose();
+        pedrinha.dispose();
+        bot1.dispose();
 	}
 
-	private boolean isAndando () {
+	private boolean isPersonaAndando () {
 		return andando;
 	}
 
-	private boolean isAtacando() {
+	private boolean isPersonaAtacando() {
 		return atacando;
 	}
 
-	private boolean isPulando() {
+	private boolean isPersonaPulando() {
 		return pulando;
 	}
 
 	private void input() {
+        int x = Gdx.input.getX();
+		int y = SCREENY - Gdx.input.getY();
 		if (Gdx.input.isTouched()){
-			int x = Gdx.input.getX();
-			int y = SCREENY - Gdx.input.getY();
-
 			andando = btnStart.isClicado(x, y);
-			atacando = btnAtack.isClicado(x, y);
-			pulando = btnPular.isClicado(x , y);
 
+            atacando = btnAtack.isClicado(x, y);
+            pulando = btnPular.isClicado(x, y);
+
+            if (atacando) {
+                pedrinha.atirar();
+                bot1.caminhar();
+            }
 		}
 	}
 

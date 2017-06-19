@@ -8,8 +8,8 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class Victoria extends Personagem {
 
 
-    public Victoria(int posx, int posy, int quantidadeDeTexturas) {
-        super(posx, posy, quantidadeDeTexturas);
+    public Victoria(Texture personaParado ,int posx, int posy, int quantidadeDeTexturas) {
+        super(personaParado, posx, posy, quantidadeDeTexturas);
     }
 
     @Override

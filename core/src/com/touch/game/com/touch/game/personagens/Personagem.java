@@ -27,19 +27,24 @@ public abstract class Personagem implements Ser {
 
     boolean atacando = false;
 
+    boolean pulando = false;
+
     int quantidadeDeTexturas, posx, posy;
 
 
-    public Personagem(int posx, int posy, int quantidadeDeTexturasInicial) {
+    public Personagem(Texture personaParado ,int posx, int posy, int quantidadeDeTexturasInicial) {
         this.posx = posx;
         this.posy = posy;
         this.quantidadeDeTexturas = quantidadeDeTexturasInicial;
         velocidade = new Vector2(0,0);
         velocidade.y = -impulso;
 
-        personagemParado = new Texture("personas/diego/andar/walk1.png");
+        personagemParado = personaParado;
         corpo = new Circle(posx, posy, personagem);
 
+    }
+
+    protected Personagem() {
     }
 
     public abstract Texture getMovimentacaoPersonagem(int i) throws NotImplementedException;
@@ -51,10 +56,12 @@ public abstract class Personagem implements Ser {
     public void draw(SpriteBatch batch) {
 
         if (andando | atacando) {
-            batch.draw(frames[(int)auxiliarDeFrames % quantidadeDeTexturas], corpo.x - corpo.radius, corpo.y - corpo.radius,
+            batch.draw(frames[(int)auxiliarDeFrames % quantidadeDeTexturas], posx, posy,
                     corpo.radius * 2, corpo.radius*2);
+        } else if (pulando) {
+
         } else {
-            batch.draw(personagemParado, corpo.x - corpo.radius, corpo.y - corpo.radius, corpo.radius * 2, corpo.radius*2);
+            batch.draw(personagemParado, posx, posy, corpo.radius * 2, corpo.radius*2);
         }
 
     }
@@ -78,7 +85,7 @@ public abstract class Personagem implements Ser {
         corpo.x += velocidade.x * time;
         corpo.y += velocidade.y * time;
 
-        velocidade.y -= decVeloy * time;
+        velocidade.y -= gravidade * time;
 
         if (corpo.y + corpo.radius > SCREENY) {
             corpo.y = SCREENY - corpo.radius;
@@ -113,9 +120,16 @@ public abstract class Personagem implements Ser {
         }
     }
 
+    @Override
+    public void caminhar() { }
+
     public void dispose() {
         for (int i = 0;i<= 2;i++) {
            frames[i].dispose();
         }
+    }
+
+    public Circle getCorpoPersonagem() {
+        return corpo;
     }
 }
