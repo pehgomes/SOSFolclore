@@ -7,10 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import static com.touch.game.Constantes.SCREENX;
-import static com.touch.game.Constantes.SCREENY;
-import static com.touch.game.Constantes.gravidade;
-import static com.touch.game.Constantes.impulso;
 import static com.touch.game.Constantes.personagem;
 
 /**
@@ -23,15 +19,15 @@ public class Bot extends Personagem {
 
     Texture textura;
 
+    Texture[] frames;
+
 
     public Bot(Texture personaParado ,int posx, int posy, int quantidadeDeTexturasInicial) {
-        this.posx = posx;
-        this.posy = posy;
-        this.quantidadeDeTexturas = quantidadeDeTexturasInicial;
-        velocidade = new Vector2(0,0);
-        velocidade.y = -impulso;
-        textura = personaParado;
         corpo = new Circle(posx, posy, personagem);
+        textura = personaParado;
+        velocidade = new Vector2(0,0);
+
+        this.quantidadeDeTexturas = quantidadeDeTexturasInicial;
     }
 
     @Override
@@ -51,35 +47,37 @@ public class Bot extends Personagem {
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.draw(textura, corpo.x, corpo.y, corpo.radius * 2, corpo.radius * 2);
+        // batch.draw(textura, corpo.x, corpo.y, corpo.radius * 2, corpo.radius * 2);
+        batch.draw(frames[(int) auxiliarDeFrames % quantidadeDeTexturas], posx, posy,
+                corpo.radius * 2, corpo.radius * 2);
     }
 
     @Override
     public void update(int quantidadeDeTexturas, float time, boolean movimentou, boolean atacou, boolean pulou) {
+        auxiliarDeFrames += this.quantidadeDeTexturas*time;
         corpo.x += velocidade.x * time;
         corpo.y += velocidade.y * time;
-
-        velocidade.y -= gravidade * time;
-
-        if (corpo.y + corpo.radius > SCREENY) {
-            corpo.y = SCREENY - corpo.radius;
-            velocidade.y = -impulso;
-        }
-
-        if (corpo.y - corpo.radius <= SCREENY) {
-            corpo.y = corpo.radius;
-            velocidade.y = impulso;
-        }
-
-
+        andar();
      }
 
-     public void caminhar() {
-         velocidade.y += impulso;
-     }
+    public void andar(){
+        corpo = new Circle(posx, posy, personagem);
+        frames = new Texture[quantidadeDeTexturas];
+
+        for (int i =1; i <= quantidadeDeTexturas;i++) {
+            frames[i-1] = getMovimentacaoPersonagem(i);
+        }
+
+    }
+
+    public void dispose() {
+        for (int i = 0;i<= quantidadeDeTexturas;i++) {
+            frames[i].dispose();
+        }
+    }
 
     @Override
-    public void dispose() {
-        textura.dispose();
+    public Circle getCorpoPersonagem() {
+        return corpo;
     }
 }

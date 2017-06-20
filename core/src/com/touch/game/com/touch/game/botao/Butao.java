@@ -41,4 +41,8 @@ public class Butao {
         return high;
     }
 
+    public void dispose() {
+        textura.dispose();
+    }
+
 }

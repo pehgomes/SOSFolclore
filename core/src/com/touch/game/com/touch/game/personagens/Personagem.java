@@ -29,6 +29,7 @@ public abstract class Personagem implements Ser {
 
     boolean pulando = false;
 
+
     int quantidadeDeTexturas, posx, posy;
 
 
@@ -111,6 +112,7 @@ public abstract class Personagem implements Ser {
         }
     }
 
+
     private void atacar() {
         corpo = new Circle(posx, posy, personagem);
         frames = new Texture[quantidadeDeTexturas];
@@ -121,10 +123,12 @@ public abstract class Personagem implements Ser {
     }
 
     @Override
-    public void caminhar() { }
+    public void caminhar() {
+        andar();
+    }
 
     public void dispose() {
-        for (int i = 0;i<= 2;i++) {
+        for (int i = 0;i<= quantidadeDeTexturas;i++) {
            frames[i].dispose();
         }
     }

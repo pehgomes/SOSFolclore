@@ -19,6 +19,11 @@ public class Municao {
 
     Vector2 velocidade;
 
+    private float posXOponente;
+
+    private float posYOponente;
+
+    private boolean atirou;
 
     public Municao (int posx, int posy) {
         objeto = new Circle(posx, posy, personagem);
@@ -44,9 +49,21 @@ public class Municao {
             objeto.y = objeto.radius;
             //velocidade.y = impulso;
         }
+
+        if (atirou) {
+            if (objeto.x <= posXOponente) {
+                objeto.x += velocidade.x * time;
+            } else {
+                velocidade.y -= SCREENY/8;
+                // velocidade.y = gravidade * time;
+            }
+        }
     }
 
-    public void atirar() {
+    public void atirar(Circle corpoOponente) {
+        posXOponente = corpoOponente.x;
+        posYOponente = corpoOponente.y - SCREENY;
+        atirou = true;
         velocidade.x += impulso;
     }
 
