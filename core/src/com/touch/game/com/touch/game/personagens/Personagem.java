@@ -29,9 +29,7 @@ public abstract class Personagem implements Ser {
 
     boolean pulando = false;
 
-
     int quantidadeDeTexturas, posx, posy;
-
 
     public Personagem(Texture personaParado ,int posx, int posy, int quantidadeDeTexturasInicial) {
         this.posx = posx;

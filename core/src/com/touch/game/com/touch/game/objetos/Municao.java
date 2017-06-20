@@ -15,6 +15,8 @@ public class Municao {
 
     private Circle objeto;
 
+    private Circle corpoOponente;
+
     private Texture textura;
 
     Vector2 velocidade;
@@ -27,6 +29,8 @@ public class Municao {
 
     public Municao (int posx, int posy) {
         objeto = new Circle(posx, posy, personagem);
+        corpoOponente = new Circle(posXOponente, posYOponente, personagem);
+
         textura = new Texture("personas/diego/objetos/pedra1.png");
         velocidade = new Vector2(0,0);
     }
@@ -51,18 +55,18 @@ public class Municao {
         }
 
         if (atirou) {
-            if (objeto.x <= posXOponente) {
+            if (objeto.x >= posXOponente) {
                 objeto.x += velocidade.x * time;
             } else {
-                velocidade.y -= SCREENY/8;
-                // velocidade.y = gravidade * time;
+                velocidade.y -= impulso;
+                velocidade.y = 1000 * time;
             }
         }
     }
 
-    public void atirar(Circle corpoOponente) {
-        posXOponente = corpoOponente.x;
-        posYOponente = corpoOponente.y - SCREENY;
+    public void atirar(int x, int y) {
+        posXOponente = x;
+        posYOponente = y;
         atirou = true;
         velocidade.x += impulso;
     }

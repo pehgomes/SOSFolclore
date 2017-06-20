@@ -41,7 +41,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
     private boolean rodarSom ;
 
-	private int quantidadeDeTextura;
+	private int quantidadeDeTextura, posxOponente, posyOponente;
 
 
 
@@ -56,9 +56,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		btnPular = new Butao(new Texture("botoes/pular.png"), btnPularx, btnPulary, btnTamanho );
 
         fundo = new PlanoDeFundo();
-
+        posxOponente = (int) 1.55f * SCREENY;
+        posyOponente = (int) (SCREENY/2.45 );
         personagemAEscolher = new Diego(new Texture("personas/diego/andar/walk1.png") ,(int) 0.99f * SCREENY, (int) (SCREENY/2.45 ), quantidadeDeTextura);
-        bot1 = new Bot(new Texture("personas/bot/bot1.png") ,(int) 1.50f * SCREENY, (int) (SCREENY/2.45 ), 7);
+        bot1 = new Bot(new Texture("personas/bot/bot1.png") ,posxOponente, posyOponente, 7);
         pedrinha = new Municao((int) personagemAEscolher.getCorpoPersonagem().x ,(int) personagemAEscolher.getCorpoPersonagem().y);
     }
 
@@ -133,7 +134,7 @@ public class MyGdxGame extends ApplicationAdapter {
             pulando = btnPular.isClicado(x, y);
 
             if (atacando) {
-                pedrinha.atirar(bot1.getCorpoPersonagem());
+                pedrinha.atirar(posxOponente, posyOponente);
             }
 		}
 	}

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import static com.touch.game.Constantes.impulso;
 import static com.touch.game.Constantes.personagem;
 
 /**
@@ -21,11 +22,16 @@ public class Bot extends Personagem {
 
     Texture[] frames;
 
+    private int x,y;
+
 
     public Bot(Texture personaParado ,int posx, int posy, int quantidadeDeTexturasInicial) {
+        this.x = posx;
+        this.y = posy;
         corpo = new Circle(posx, posy, personagem);
         textura = personaParado;
         velocidade = new Vector2(0,0);
+        velocidade.y = -impulso;
 
         this.quantidadeDeTexturas = quantidadeDeTexturasInicial;
     }
@@ -48,13 +54,13 @@ public class Bot extends Personagem {
     @Override
     public void draw(SpriteBatch batch) {
         // batch.draw(textura, corpo.x, corpo.y, corpo.radius * 2, corpo.radius * 2);
-        batch.draw(frames[(int) auxiliarDeFrames % quantidadeDeTexturas], posx, posy,
+        batch.draw(frames[(int) auxiliarDeFrames % quantidadeDeTexturas], x, y,
                 corpo.radius * 2, corpo.radius * 2);
     }
 
     @Override
     public void update(int quantidadeDeTexturas, float time, boolean movimentou, boolean atacou, boolean pulou) {
-        auxiliarDeFrames += this.quantidadeDeTexturas*time;
+        auxiliarDeFrames += this.quantidadeDeTexturas*0.003f;
         corpo.x += velocidade.x * time;
         corpo.y += velocidade.y * time;
         andar();
